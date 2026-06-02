@@ -1,56 +1,80 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Maps UI Preview</title>
-
-<link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Optimasi Rute Pengantaran Barang Menggunakan Metode TSP</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 
 <body>
+  <canvas id="mapCanvas"></canvas>
 
-<div class="map">
-
-  <!-- SIDEBAR -->
-  <div class="sidebar">
-  
-    <div>📌<br>Saved</div>
-    <div>🕘<br>Recents</div>
-    <div>🗺️<br>Maps</div>
-    <div>R<br>Rute</div>
+  <div class="title-box">
+    <h1>OPTIMASI RUTE PENGANTARAN BARANG MENGGUNAKAN METODE TSP</h1>
+    <p>Menentukan urutan pengantaran tercepat dari titik awal menuju 1 sampai 2 lokasi tujuan</p>
   </div>
 
-  <!-- SEARCH -->
-  <div class="search-bar">
-    🔍 cari lokasi
+  <div class="legend">
+    <div class="legend-title">Keterangan Warna Titik pada Map</div>
+    🟢 Titik awal pengantaran<br>
+    🔴 Titik tujuan pengantaran<br>
+    🟡 Titik tersedia atau belum dipilih<br>
+    ⚪ Edge atau jalur antar titik<br>
+    🔵 Rute optimal hasil perhitungan<br>
+    🚚 Kendaraan mengikuti arah jalan
   </div>
 
-  <!-- PANEL FITUR -->
-  <div class="panel">
-    <div class="btn">🎲 Acak Posisi</div>
-    <div class="btn">⏯ Start / Pause</div>
-    <div class="btn">🗺️ 2D / 3D</div>
-    <div class="btn">🌍 Acak Map</div>
-    <div class="btn">🚗 Kendaraan</div>
+  <div class="info-box">
+    <div><b>Status:</b><br><span id="statusText">Pilih titik awal terlebih dahulu</span></div>
+    <div><b>Titik Awal:</b><br><span id="startText">Belum dipilih</span></div>
+    <div><b>Tujuan:</b><br><span id="destinationText">Belum dipilih</span></div>
+    <div><b>Rute:</b><br><span id="routeText">Belum dihitung</span></div>
+    <div><b>Total Jarak:</b><br><span id="distanceText">0 km</span></div>
   </div>
 
-  <!-- ZOOM -->
-  <div class="zoom">
-    <div>+</div>
-    <div>−</div>
+  <div id="algorithmResultBar" class="algorithm-result-bar hidden">
+  <div class="result-title">📊 Evaluasi Algoritma</div>
+
+  <div class="result-card">
+    <div id="selectedAlgorithmBadge" class="badge">Algoritma</div>
+    <div id="selectedAlgorithmResult">Hasil evaluasi akan muncul setelah kendaraan sampai tujuan akhir.</div>
   </div>
 
-  <!-- MARKER -->
-  <div class="marker">📍</div>
+  <div id="algorithmConclusion" class="algorithm-conclusion">
+    Evaluasi akan menyesuaikan algoritma yang dipilih.
+  </div>
+  </div>
 
-  <!-- MARKER -->
-  <div class="marker"></div>
+  <div id="algorithmConclusion" class="algorithm-conclusion">
+    Hasil evaluasi akan muncul setelah kendaraan sampai tujuan akhir.
+  </div>
+  </div>
 
-  <!-- VEHICLE -->
-  <div class="vehicle">🚗</div>
+  <div class="control-panel">
+    <div class="panel-header">
+      <span class="panel-title">Kontrol Sistem</span>
+      <label for="algorithmSelect">Algoritma</label>
+      <select id="algorithmSelect">
+        <option value="greedy">Greedy Nearest</option>
+        <option value="bruteforce">Brute Force</option>
+      </select>
+    </div>
 
-</div>
+    <div class="panel-buttons">
+      <button onclick="calculateRoute()" class="secondary">Hitung Rute Tercepat</button>
+      <button onclick="toggleAnimation()" class="secondary">Start / Pause Kendaraan</button>
+      <button onclick="randomStart()" class="secondary">Acak Titik Awal</button>
+      <button onclick="resetSelection()" class="danger reset-button">Reset Pilihan</button>
+    </div>
+  </div>
 
+
+  <div class="zoom-control">
+    <button onclick="zoomIn()">+</button>
+    <button onclick="zoomOut()">−</button>
+  </div>
+
+  <script src="script.js"></script>
 </body>
 </html>
